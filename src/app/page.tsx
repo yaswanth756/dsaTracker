@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Code2, Layers, Calendar, Loader2, Search } from 'lucide-react';
+import { ArrowUpRight, Code2, Layers, Calendar, Loader2, Search, Plus, Brain, Mail, FolderOpen, Sparkles } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { apiFetch } from '@/lib/apiClient';
 import { useRouter } from 'next/navigation';
@@ -82,22 +82,131 @@ export default function Dashboard() {
 
   if (problems.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-[calc(100vh-4rem)] text-center space-y-6">
-        <div className="w-24 h-24 rounded-full bg-secondary flex items-center justify-center">
-          <Code2 className="w-10 h-10 text-muted-foreground" />
-        </div>
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight">Your vault is empty</h2>
-          <p className="text-muted-foreground mt-2 max-w-sm">
-            Add your first Data Structure and Algorithm problem to start tracking your progress.
-          </p>
-        </div>
-        <Link
-          href="/new"
-          className="bg-primary text-primary-foreground px-6 py-3 rounded-full font-medium hover:bg-primary/90 transition-transform active:scale-95"
+      <div className="relative flex flex-col items-center justify-center h-full overflow-hidden">
+        {/* Background glow */}
+        <motion.div
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-primary/5 blur-3xl pointer-events-none"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.7, 0.4] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+        />
+
+        {/* Floating icons */}
+        {[
+          { icon: Code2, x: '15%', y: '20%', delay: 0, size: 20 },
+          { icon: Layers, x: '80%', y: '15%', delay: 0.5, size: 18 },
+          { icon: Brain, x: '10%', y: '70%', delay: 1, size: 16 },
+          { icon: Mail, x: '85%', y: '65%', delay: 1.5, size: 22 },
+          { icon: Sparkles, x: '70%', y: '80%', delay: 0.8, size: 14 },
+          { icon: Calendar, x: '25%', y: '85%', delay: 1.2, size: 16 },
+        ].map(({ icon: Icon, x, y, delay, size }, i) => (
+          <motion.div
+            key={i}
+            className="absolute text-muted-foreground/80 pointer-events-none"
+            style={{ left: x, top: y }}
+            animate={{ y: [0, -12, 0], rotate: [0, 5, -5, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay }}
+          >
+            <Icon style={{ width: size, height: size }} />
+          </motion.div>
+        ))}
+
+        {/* Main content */}
+        <motion.div
+          className="relative z-10 flex flex-col items-center text-center max-w-lg px-4"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          Add First Problem
-        </Link>
+          {/* Animated icon */}
+          <motion.div
+            className="mb-8"
+            initial={{ scale: 0, rotate: -90 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+          >
+            <div className="relative">
+              <div className="w-20 h-20 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center shadow-lg">
+                <FolderOpen className="w-9 h-9" />
+              </div>
+              <motion.div
+                className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-muted-foreground/10 border-2 border-background flex items-center justify-center"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.7, type: 'spring', stiffness: 300 }}
+              >
+                <span className="text-xs font-bold text-muted-foreground">0</span>
+              </motion.div>
+            </div>
+          </motion.div>
+
+          {/* Heading */}
+          <motion.h2
+            className="text-3xl sm:text-4xl font-extrabold tracking-tight"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.35 }}
+          >
+            Start Your First Loop
+          </motion.h2>
+
+          <motion.p
+            className="text-muted-foreground mt-3 text-base sm:text-lg leading-relaxed"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+          >
+            Track it. Revise it. Never forget it.
+          </motion.p>
+
+          {/* Feature pills */}
+          <motion.div
+            className="flex flex-wrap items-center justify-center gap-2.5 mt-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.65 }}
+          >
+            {[
+              { icon: Brain, label: 'Revision' },
+              { icon: Mail, label: 'Reminders' },
+              { icon: Layers, label: 'One Place' },
+            ].map(({ icon: Icon, label }) => (
+              <span
+                key={label}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-secondary text-secondary-foreground text-xs sm:text-sm font-medium border border-border/50"
+              >
+                <Icon className="w-3.5 h-3.5 text-muted-foreground" />
+                {label}
+              </span>
+            ))}
+          </motion.div>
+
+          {/* CTA Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.85 }}
+            className="mt-10"
+          >
+            <Link
+              href="/new"
+              className="group inline-flex items-center gap-2.5 bg-primary text-primary-foreground pl-6 pr-5 py-3.5 rounded-full font-semibold text-base hover:bg-primary/90 transition-all active:scale-95 shadow-lg shadow-primary/20"
+            >
+              <Plus className="w-5 h-5" />
+              Add Your First Problem
+              <ArrowUpRight className="w-4 h-4 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+            </Link>
+          </motion.div>
+
+          {/* Subtle hint */}
+          <motion.p
+            className="text-muted-foreground/50 text-xs mt-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1.1 }}
+          >
+            Powered by Loop
+          </motion.p>
+        </motion.div>
       </div>
     );
   }
@@ -106,8 +215,8 @@ export default function Dashboard() {
     <div className="space-y-6 animate-in fade-in duration-500 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Recent Problems</h1>
-          <p className="text-muted-foreground mt-1">Pick up where you left off.</p>
+          <h1 className="text-3xl font-bold tracking-tight">Revision Dashboard</h1>
+          <p className="text-muted-foreground mt-1">All your DSA problems in one place — pick up and revise.</p>
         </div>
 
         {/* Search Bar */}

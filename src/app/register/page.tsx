@@ -50,10 +50,14 @@ export default function Register() {
             >
                 <div className="flex flex-col items-center mb-8">
                     <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-4">
-                        <Layers className="w-6 h-6 text-primary-foreground" />
+                        <svg className="w-6 h-6 text-primary-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 2a10 10 0 0 1 7.07 17.07" />
+                            <path d="M12 22a10 10 0 0 1-7.07-17.07" />
+                            <polyline points="16 12 12 8 8 12" />
+                        </svg>
                     </div>
-                    <h1 className="text-2xl font-bold tracking-tight">Create your Vault</h1>
-                    <p className="text-muted-foreground text-sm mt-1">Start tracking your DSA progress</p>
+                    <h1 className="text-2xl font-bold tracking-tight">Join Loop</h1>
+                    <p className="text-muted-foreground text-sm mt-1">Revise smarter. Never forget what you solved.</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">

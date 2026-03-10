@@ -37,9 +37,13 @@ export function Sidebar() {
         <aside className="w-16 h-screen border-r border-border/40 bg-card/50 flex flex-col justify-between shrink-0">
             <div className="flex flex-col gap-6 py-6 px-2">
                 {/* Logo */}
-                <Link href="/" title="Vault" className="flex justify-center mb-4 group cursor-pointer">
+                <Link href="/" title="Loop" className="flex justify-center mb-4 group cursor-pointer">
                     <div className="w-10 h-10 rounded-xl bg-primary text-primary-foreground flex items-center justify-center group-hover:scale-105 transition-transform">
-                        <Code2 className="w-5 h-5" />
+                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 2a10 10 0 0 1 7.07 17.07" />
+                            <path d="M12 22a10 10 0 0 1-7.07-17.07" />
+                            <polyline points="16 12 12 8 8 12" />
+                        </svg>
                     </div>
                 </Link>
 
