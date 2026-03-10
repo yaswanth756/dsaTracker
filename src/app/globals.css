@@ -80,3 +80,228 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   Rich Notes Editor — Medium-style TipTap styles
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Base editor ── */
+.rich-notes-editor {
+  color: var(--foreground);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  caret-color: var(--primary);
+  min-height: 100%;
+}
+
+.rich-notes-editor:focus {
+  outline: none;
+}
+
+/* ── Placeholder ── */
+.rich-notes-editor p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--muted-foreground);
+  opacity: 0.4;
+  pointer-events: none;
+  height: 0;
+  font-style: italic;
+}
+
+/* ── Headings ── */
+.rich-notes-editor h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--foreground);
+}
+
+.rich-notes-editor h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+  margin-top: 1.25rem;
+  margin-bottom: 0.4rem;
+  color: var(--foreground);
+}
+
+.rich-notes-editor h3 {
+  font-size: 1.1rem;
+  font-weight: 650;
+  line-height: 1.5;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+  color: var(--foreground);
+}
+
+/* ── Paragraphs / Body ── */
+.rich-notes-editor p {
+  margin-bottom: 0.6rem;
+  color: var(--card-foreground);
+  opacity: 0.88;
+}
+
+/* ── Bold / Italic / Underline ── */
+.rich-notes-editor strong {
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.rich-notes-editor em {
+  font-style: italic;
+}
+
+.rich-notes-editor u {
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+
+.rich-notes-editor s {
+  opacity: 0.5;
+}
+
+/* ── Highlight colors ── */
+.rich-notes-editor mark {
+  border-radius: 3px;
+  padding: 1px 4px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* ── Inline Code ── */
+.rich-notes-editor code {
+  background: var(--muted);
+  color: var(--foreground);
+  font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+  font-size: 0.82em;
+  padding: 2px 6px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  font-weight: 500;
+}
+
+/* ── Code Block ── */
+.rich-notes-editor pre {
+  background: var(--muted) !important;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin: 0.75rem 0;
+  overflow-x: auto;
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.rich-notes-editor pre code {
+  background: none !important;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: var(--foreground);
+}
+
+/* ── Blockquote ── */
+.rich-notes-editor blockquote {
+  border-left: 3px solid var(--primary);
+  padding-left: 1rem;
+  margin: 0.75rem 0;
+  color: var(--muted-foreground);
+  font-style: italic;
+  background: var(--muted);
+  border-radius: 0 10px 10px 0;
+  padding: 0.75rem 1rem;
+}
+
+.rich-notes-editor blockquote p {
+  margin-bottom: 0;
+  opacity: 1;
+}
+
+/* ── Lists ── */
+.rich-notes-editor ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.rich-notes-editor ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.rich-notes-editor li {
+  margin-bottom: 0.25rem;
+}
+
+.rich-notes-editor li p {
+  margin-bottom: 0.15rem;
+}
+
+.rich-notes-editor li::marker {
+  color: var(--muted-foreground);
+}
+
+/* ── Horizontal Rule ── */
+.rich-notes-editor hr {
+  border: none;
+  border-top: 2px solid var(--border);
+  margin: 1.25rem 0;
+  border-radius: 2px;
+}
+
+/* ── Selection ── */
+.rich-notes-editor ::selection {
+  background: rgba(99, 102, 241, 0.25);
+}
+
+/* ── Dark mode specific overrides ── */
+.dark .rich-notes-editor mark[data-color="#fef08a"] {
+  background: rgba(254, 240, 138, 0.25) !important;
+  color: #fef08a;
+}
+
+.dark .rich-notes-editor mark[data-color="#fecaca"] {
+  background: rgba(254, 202, 202, 0.2) !important;
+  color: #fca5a5;
+}
+
+.dark .rich-notes-editor mark[data-color="#bbf7d0"] {
+  background: rgba(187, 247, 208, 0.15) !important;
+  color: #86efac;
+}
+
+/* ── Scrollbar for editor ── */
+.rich-notes-editor::-webkit-scrollbar {
+  width: 4px;
+}
+
+.rich-notes-editor::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.rich-notes-editor::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+/* ── Tippy bubble menu animation ── */
+.tippy-box {
+  animation: bubbleIn 0.15s ease-out;
+}
+
+@keyframes bubbleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

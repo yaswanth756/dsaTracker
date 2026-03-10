@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, use } from 'react';
+import { useEffect, useState, use, lazy, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { Editor } from '@monaco-editor/react';
 import { ArrowLeft, ExternalLink, Save, Loader2, Code2, BookOpen, Trash, LayoutPanelLeft, GripVertical, Minus, Plus, Clock, ChevronDown } from 'lucide-react';
@@ -9,6 +9,8 @@ import { useTheme } from 'next-themes';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import { apiFetch } from '@/lib/apiClient';
 import { motion } from 'framer-motion';
+
+const RichNotesEditor = lazy(() => import('@/components/RichNotesEditor'));
 
 const difficultyConfig: Record<string, { label: string; dot: string; bg: string }> = {
     easy: { label: 'Easy', dot: 'bg-green-500', bg: 'bg-green-500/10 text-green-600 dark:text-green-400' },
@@ -294,14 +296,17 @@ export default function ProblemDetail({ params }: { params: Promise<{ id: string
                             </div>
 
                             {/* Content */}
-                            <div className="flex-1 relative overflow-auto">
+                            <div className="flex-1 relative overflow-hidden">
                                 {activeTab === 'notes' ? (
-                                    <textarea
-                                        value={notes}
-                                        onChange={(e) => setNotes(e.target.value)}
-                                        placeholder="Write down the key intuition, approach, edge cases..."
-                                        className="absolute inset-0 p-5 resize-none bg-transparent outline-none focus:ring-0 text-sm leading-relaxed placeholder:text-muted-foreground/40 transition-colors"
-                                    />
+                                    <div className="absolute inset-0">
+                                        <Suspense fallback={
+                                            <div className="flex items-center justify-center h-full">
+                                                <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
+                                            </div>
+                                        }>
+                                            <RichNotesEditor content={notes} onChange={setNotes} />
+                                        </Suspense>
+                                    </div>
                                 ) : (
                                     <div className="absolute inset-0 p-5 overflow-auto">
                                         {fetchingHtml ? (

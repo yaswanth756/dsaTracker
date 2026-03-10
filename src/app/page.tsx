@@ -232,6 +232,83 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* Stats Section with LeetCode-style Donut */}
+      {problems.length > 0 && (() => {
+        const easyProblems = problems.filter(p => p.difficulty === 'easy').length;
+        const mediumProblems = problems.filter(p => p.difficulty === 'medium').length;
+        const hardProblems = problems.filter(p => p.difficulty === 'hard').length;
+        const totalProblems = problems.length;
+
+        const radius = 42;
+        const strokeWidth = 5;
+        const circum = 2 * Math.PI * radius;
+
+        let currentOffset = 0;
+        return (
+          <div className="bg-card border border-border/50 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center gap-8 shadow-sm">
+            {/* Progress Donut */}
+            <div className="relative w-36 h-36 shrink-0">
+              <svg className="w-full h-full transform -rotate-90 drop-shadow-sm" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r={radius} fill="transparent" stroke="currentColor" strokeWidth={strokeWidth} className="text-muted/10 dark:text-muted/20" />
+
+                {[
+                  { count: easyProblems, color: '#00b8a3' },    // Easy - Teal
+                  { count: mediumProblems, color: '#ffc01e' },  // Medium - Yellow
+                  { count: hardProblems, color: '#ef4743' },    // Hard - Red
+                ].map((segment, index) => {
+                  if (segment.count === 0) return null;
+
+                  const proportion = segment.count / totalProblems;
+                  const trueLength = proportion * circum;
+                  const segmentSpacing = totalProblems === segment.count ? 0 : 8;
+                  const dashLength = Math.max(0, trueLength - segmentSpacing);
+                  const dashoffset = -currentOffset;
+
+                  currentOffset += trueLength;
+
+                  return (
+                    <circle
+                      key={index}
+                      cx="50" cy="50" r={radius}
+                      fill="transparent"
+                      stroke={segment.color}
+                      strokeWidth={strokeWidth}
+                      strokeLinecap="round"
+                      strokeDasharray={`${dashLength} ${circum}`}
+                      strokeDashoffset={dashoffset}
+                      className="transition-all duration-1000 ease-out"
+                    />
+                  );
+                })}
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-4xl font-extrabold tracking-tight">{totalProblems}</span>
+                <span className="text-xs font-semibold text-muted-foreground flex items-center gap-1 mt-0.5">
+                  <svg className="w-3.5 h-3.5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
+                  Solved
+                </span>
+              </div>
+            </div>
+
+            {/* Stats breakdown */}
+            <div className="flex-1 w-full grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="bg-[#00b8a3]/5 dark:bg-[#00b8a3]/10 border border-[#00b8a3]/15 rounded-2xl p-4 flex flex-col justify-center">
+                <span className="text-[#00b8a3] font-semibold text-sm mb-1">Easy</span>
+                <span className="text-2xl font-bold text-foreground">{easyProblems}</span>
+              </div>
+              <div className="bg-[#ffc01e]/5 dark:bg-[#ffc01e]/10 border border-[#ffc01e]/15 rounded-2xl p-4 flex flex-col justify-center">
+                <span className="text-[#ffc01e] font-semibold text-sm mb-1">Medium</span>
+                <span className="text-2xl font-bold text-foreground">{mediumProblems}</span>
+              </div>
+              <div className="bg-[#ef4743]/5 dark:bg-[#ef4743]/10 border border-[#ef4743]/15 rounded-2xl p-4 flex flex-col justify-center">
+                <span className="text-[#ef4743] font-semibold text-sm mb-1">Hard</span>
+                <span className="text-2xl font-bold text-foreground">{hardProblems}</span>
+              </div>
+            </div>
+          </div>
+        )
+      })()}
+
       {/* Horizontal Category Scroll */}
       <div className="flex overflow-x-auto pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide gap-2">
         {categories.map((category) => {
