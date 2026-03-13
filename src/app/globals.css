@@ -256,24 +256,31 @@
 }
 
 /* ── Selection ── */
-.rich-notes-editor ::selection {
+.rich-notes-editor ::selection,
+.rich-notes-editor *::selection {
   background: rgba(99, 102, 241, 0.25);
+}
+
+.dark .rich-notes-editor ::selection,
+.dark .rich-notes-editor *::selection {
+  background: rgba(129, 140, 248, 0.4);
+  color: #ffffff;
 }
 
 /* ── Dark mode specific overrides ── */
 .dark .rich-notes-editor mark[data-color="#fef08a"] {
-  background: rgba(254, 240, 138, 0.25) !important;
-  color: #fef08a;
+  background: rgba(234, 179, 8, 0.25) !important;
+  color: #fef08a !important;
 }
 
 .dark .rich-notes-editor mark[data-color="#fecaca"] {
-  background: rgba(254, 202, 202, 0.2) !important;
-  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.25) !important;
+  color: #fca5a5 !important;
 }
 
 .dark .rich-notes-editor mark[data-color="#bbf7d0"] {
-  background: rgba(187, 247, 208, 0.15) !important;
-  color: #86efac;
+  background: rgba(34, 197, 94, 0.25) !important;
+  color: #86efac !important;
 }
 
 /* ── Scrollbar for editor ── */
