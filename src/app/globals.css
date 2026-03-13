@@ -185,6 +185,12 @@
   font-weight: 500;
 }
 
+/* Remove default Tailwind Typography backticks */
+.rich-notes-editor code::before,
+.rich-notes-editor code::after {
+  content: none !important;
+}
+
 /* ── Code Block ── */
 .rich-notes-editor pre {
   background: var(--muted) !important;
