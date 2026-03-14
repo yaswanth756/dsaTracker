@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import { Moon, Sun, Plus, Home, Code2, LogOut } from 'lucide-react';
+import { Moon, Sun, Plus, Home, Code2, LogOut, BookOpen } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -20,6 +20,7 @@ export function Sidebar() {
 
     const navItems = [
         { href: '/', label: 'Dashboard', icon: Home },
+        { href: '/books', label: 'My Books', icon: BookOpen },
         { href: '/new', label: 'Add Problem', icon: Plus },
     ];
 
@@ -50,7 +51,7 @@ export function Sidebar() {
                 {/* Navigation */}
                 <nav className="flex flex-col gap-3 items-center">
                     {navItems.map((item) => {
-                        const isActive = pathname === item.href;
+                        const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
                         const Icon = item.icon;
 
                         return (
