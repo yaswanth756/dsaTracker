@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Code2, Layers, Calendar, Loader2, Search, Plus, Brain, Mail, FolderOpen, Sparkles } from 'lucide-react';
@@ -33,6 +33,26 @@ export default function Dashboard() {
   // Filters state
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [visibleCount, setVisibleCount] = useState(12);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  // Reset visible items when filters change
+  useEffect(() => {
+    setVisibleCount(12);
+  }, [searchQuery, selectedCategory]);
+
+  const loadMoreRef = useCallback((node: HTMLDivElement | null) => {
+    if (observerRef.current) observerRef.current.disconnect();
+    if (!node) return;
+    
+    observerRef.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setVisibleCount((prev) => prev + 12);
+      }
+    }, { rootMargin: '200px' });
+    
+    observerRef.current.observe(node);
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -330,7 +350,7 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <AnimatePresence>
-          {filteredProblems.map((problem, i) => (
+          {filteredProblems.slice(0, visibleCount).map((problem, i) => (
             <motion.div
               layout
               initial={{ opacity: 0, scale: 0.95 }}
@@ -388,6 +408,12 @@ export default function Dashboard() {
           </div>
         )}
       </div>
+
+      {visibleCount < filteredProblems.length && (
+        <div ref={loadMoreRef} className="w-full flex justify-center py-6">
+          <Loader2 className="w-6 h-6 animate-spin text-muted-foreground/50" />
+        </div>
+      )}
     </div>
   );
 }

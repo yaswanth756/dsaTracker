@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import { Moon, Sun, Plus, Home, Code2, LogOut, BookOpen } from 'lucide-react';
+import { Moon, Sun, Plus, Home, Code2, LogOut, BookOpen, Gamepad2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -22,6 +22,7 @@ export function Sidebar() {
         { href: '/', label: 'Dashboard', icon: Home },
         { href: '/books', label: 'My Books', icon: BookOpen },
         { href: '/new', label: 'Add Problem', icon: Plus },
+        { href: '/relax', label: 'Relax / Zen', icon: Gamepad2 },
     ];
 
     const handleLogout = () => {

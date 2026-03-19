@@ -303,6 +303,10 @@
   border-radius: 2px;
 }
 
+.dark .rich-notes-editor hr {
+  border-top-color: rgba(255, 255, 255, 0.2);
+}
+
 /* ── Selection ── */
 .rich-notes-editor ::selection,
 .rich-notes-editor *::selection {
